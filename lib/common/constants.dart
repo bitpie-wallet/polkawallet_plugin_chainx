@@ -15,7 +15,6 @@ const node_list_chainx = [
     'endpoint': 'wss://mainnet.chainx.org/ws',
   },
 ];
-const home_nav_items = ['staking', 'governance'];
 
 const MaterialColor chainx_yellow = const MaterialColor(
   0xFFF6C94A,
@@ -33,6 +32,7 @@ const MaterialColor chainx_yellow = const MaterialColor(
   },
 );
 
+const home_nav_items = ['staking', 'governance'];
+const chainx_genesis_hash =
+    '0x012cfb6997279fed8ff754a5a90cb30627c70fcdd79ee9c480bcef07de754810';
 const String network_name_chainx = 'chainx';
-
-const chainx_genesis_hash = '0x012cfb6997279fed8ff754a5a90cb30627c70fcdd79ee9c480bcef07de754810';
