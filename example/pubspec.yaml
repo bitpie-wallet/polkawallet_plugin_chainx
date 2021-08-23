@@ -18,18 +18,18 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 0.0.1+11
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_mobx: 1.1.0+2
+  flutter_mobx: ^2.0.0
   polkawallet_ui:
     git:
       url: https://github.com/polkawallet-io/ui.git
-      ref: c4346ecf37f277d6b61480f4782a9e78c99c68e2
+      ref: 144a244b038e56aead4fc97a189057819bfeab08
   #    path: ../../ui
 
   # The following adds the Cupertino Icons font to your application.
