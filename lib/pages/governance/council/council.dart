@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polkawallet_plugin_chainx/common/components/infoItem.dart';
+import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/council/candidateDetailPage.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/council/councilVotePage.dart';
 import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
@@ -9,6 +10,7 @@ import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/utils/i18n.dart';
 import 'package:polkawallet_ui/components/addressIcon.dart';
 import 'package:polkawallet_ui/components/borderedTitle.dart';
+import 'package:polkawallet_ui/components/infoItem.dart';
 import 'package:polkawallet_ui/components/outlinedButtonSmall.dart';
 import 'package:polkawallet_ui/components/roundedButton.dart';
 import 'package:polkawallet_ui/components/roundedCard.dart';
@@ -16,7 +18,6 @@ import 'package:polkawallet_ui/components/txButton.dart';
 import 'package:polkawallet_ui/pages/txConfirmPage.dart';
 import 'package:polkawallet_ui/utils/format.dart';
 import 'package:polkawallet_ui/utils/i18n.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 
 class Council extends StatefulWidget {
   Council(this.plugin);
@@ -27,7 +28,8 @@ class Council extends StatefulWidget {
 }
 
 class _CouncilState extends State<Council> {
-  final GlobalKey<RefreshIndicatorState> _refreshKey = new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshKey =
+      new GlobalKey<RefreshIndicatorState>();
 
   bool _votesExpanded = false;
 
@@ -41,14 +43,17 @@ class _CouncilState extends State<Council> {
 
   Future<void> _submitCancelVotes() async {
     final govDic = I18n.of(context).getDic(i18n_full_dic_chainx, 'gov');
+    final moduleName = await widget.plugin.service.getRuntimeModuleName(
+        ['electionsPhragmen', 'elections', 'phragmenElection']);
     final params = TxConfirmParams(
-      module: 'electionsPhragmen',
+      module: moduleName,
       call: 'removeVoter',
       txTitle: govDic['vote.remove'],
       txDisplay: {},
       params: [],
     );
-    final res = await Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: params);
+    final res = await Navigator.of(context)
+        .pushNamed(TxConfirmPage.route, arguments: params);
     if (res != null) {
       _refreshKey.currentState.show();
     }
@@ -61,7 +66,8 @@ class _CouncilState extends State<Council> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text(I18n.of(context).getDic(i18n_full_dic_chainx, 'gov')['vote.remove.confirm']),
+          content: Text(I18n.of(context)
+              .getDic(i18n_full_dic_chainx, 'gov')['vote.remove.confirm']),
           actions: [
             CupertinoButton(
               child: Text(dic['cancel']),
@@ -115,17 +121,20 @@ class _CouncilState extends State<Council> {
               InfoItem(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 title: dic['seats'],
-                content: '${widget.plugin.store.gov.council.members.length}/${int.parse(widget.plugin.store.gov.council.desiredSeats)}',
+                content:
+                    '${widget.plugin.store.gov.council.members.length}/${int.parse(widget.plugin.store.gov.council.desiredSeats)}',
               ),
               InfoItem(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 title: dic['up'],
-                content: widget.plugin.store.gov.council.runnersUp.length.toString(),
+                content:
+                    widget.plugin.store.gov.council.runnersUp.length.toString(),
               ),
               InfoItem(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 title: dic['candidate'],
-                content: widget.plugin.store.gov.council.candidates.length.toString(),
+                content: widget.plugin.store.gov.council.candidates.length
+                    .toString(),
               )
             ],
           ),
@@ -136,7 +145,9 @@ class _CouncilState extends State<Council> {
                 children: [
                   IconButton(
                     icon: Icon(
-                      _votesExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                      _votesExpanded
+                          ? Icons.keyboard_arrow_up
+                          : Icons.keyboard_arrow_down,
                       size: 28,
                       color: Theme.of(context).unselectedWidgetColor,
                     ),
@@ -173,8 +184,10 @@ class _CouncilState extends State<Council> {
                       ? ListView(
                           children: List.of(userVotes['votes']).map((i) {
                             return CandidateItem(
-                              accInfo: widget.plugin.store.accounts.addressIndexMap[i],
-                              icon: widget.plugin.store.accounts.addressIconsMap[i],
+                              accInfo: widget
+                                  .plugin.store.accounts.addressIndexMap[i],
+                              icon: widget
+                                  .plugin.store.accounts.addressIconsMap[i],
                               iconSize: 32,
                               balance: [i],
                               tokenSymbol: tokenView,
@@ -186,7 +199,8 @@ class _CouncilState extends State<Council> {
                       : Padding(
                           padding: EdgeInsets.only(top: 16),
                           child: Text(
-                            I18n.of(context).getDic(i18n_full_dic_ui, 'common')['list.empty'],
+                            I18n.of(context).getDic(
+                                i18n_full_dic_ui, 'common')['list.empty'],
                             style: TextStyle(color: Colors.black54),
                           ),
                         ),
@@ -198,7 +212,8 @@ class _CouncilState extends State<Council> {
           RoundedButton(
             text: dic['vote'],
             onPressed: () async {
-              final res = await Navigator.of(context).pushNamed(CouncilVotePage.route);
+              final res =
+                  await Navigator.of(context).pushNamed(CouncilVotePage.route);
               if (res != null) {
                 _refreshKey.currentState.show();
               }
@@ -233,10 +248,13 @@ class _CouncilState extends State<Council> {
                   Container(
                     color: Theme.of(context).cardColor,
                     child: Column(
-                      children: widget.plugin.store.gov.council.members.map((i) {
+                      children:
+                          widget.plugin.store.gov.council.members.map((i) {
                         return CandidateItem(
-                          accInfo: widget.plugin.store.accounts.addressIndexMap[i[0]],
-                          icon: widget.plugin.store.accounts.addressIconsMap[i[0]],
+                          accInfo: widget
+                              .plugin.store.accounts.addressIndexMap[i[0]],
+                          icon: widget
+                              .plugin.store.accounts.addressIconsMap[i[0]],
                           balance: i,
                           tokenSymbol: symbol,
                           decimals: decimals,
@@ -254,10 +272,13 @@ class _CouncilState extends State<Council> {
                   Container(
                     color: Theme.of(context).cardColor,
                     child: Column(
-                      children: widget.plugin.store.gov.council.runnersUp.map((i) {
+                      children:
+                          widget.plugin.store.gov.council.runnersUp.map((i) {
                         return CandidateItem(
-                          accInfo: widget.plugin.store.accounts.addressIndexMap[i[0]],
-                          icon: widget.plugin.store.accounts.addressIconsMap[i[0]],
+                          accInfo: widget
+                              .plugin.store.accounts.addressIndexMap[i[0]],
+                          icon: widget
+                              .plugin.store.accounts.addressIconsMap[i[0]],
                           balance: i,
                           tokenSymbol: symbol,
                           decimals: decimals,
@@ -276,10 +297,13 @@ class _CouncilState extends State<Council> {
                     color: Theme.of(context).cardColor,
                     child: widget.plugin.store.gov.council.candidates.length > 0
                         ? Column(
-                            children: widget.plugin.store.gov.council.candidates.map((i) {
+                            children: widget.plugin.store.gov.council.candidates
+                                .map((i) {
                               return CandidateItem(
-                                accInfo: widget.plugin.store.accounts.addressIndexMap[i],
-                                icon: widget.plugin.store.accounts.addressIconsMap[i],
+                                accInfo: widget
+                                    .plugin.store.accounts.addressIndexMap[i],
+                                icon: widget
+                                    .plugin.store.accounts.addressIconsMap[i],
                                 balance: [i],
                                 tokenSymbol: symbol,
                                 decimals: decimals,
@@ -325,12 +349,16 @@ class CandidateItem extends StatelessWidget {
       title: UI.accountDisplayName(balance[0], accInfo),
       subtitle: balance.length == 1
           ? null
-          : Text('${I18n.of(context).getDic(i18n_full_dic_chainx, 'gov')['backing']}: ${Fmt.token(
+          : Text(
+              '${I18n.of(context).getDic(i18n_full_dic_chainx, 'gov')['backing']}: ${Fmt.token(
               BigInt.parse(balance[1].toString()),
               decimals,
               length: 0,
             )} $tokenSymbol'),
-      onTap: noTap ? null : () => Navigator.of(context).pushNamed(CandidateDetailPage.route, arguments: balance.length == 1 ? [balance[0], '0x0'] : balance),
+      onTap: noTap
+          ? null
+          : () => Navigator.of(context).pushNamed(CandidateDetailPage.route,
+              arguments: balance.length == 1 ? [balance[0], '0x0'] : balance),
       trailing: trailing ?? Container(width: 8),
     );
   }

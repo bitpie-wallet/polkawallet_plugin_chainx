@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/council/candidateListPage.dart';
 import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
@@ -12,7 +13,6 @@ import 'package:polkawallet_ui/components/addressIcon.dart';
 import 'package:polkawallet_ui/components/txButton.dart';
 import 'package:polkawallet_ui/utils/format.dart';
 import 'package:polkawallet_ui/utils/i18n.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 
 class CouncilVotePage extends StatefulWidget {
   CouncilVotePage(this.plugin);
@@ -31,7 +31,8 @@ class _CouncilVote extends State<CouncilVotePage> {
   List<List> _selected = List<List>();
 
   Future<void> _handleCandidateSelect() async {
-    var res = await Navigator.of(context).pushNamed(CandidateListPage.route, arguments: _selected);
+    var res = await Navigator.of(context)
+        .pushNamed(CandidateListPage.route, arguments: _selected);
     if (res != null) {
       setState(() {
         _selected = List<List>.of(res);
@@ -45,8 +46,10 @@ class _CouncilVote extends State<CouncilVotePage> {
       final decimals = (widget.plugin.networkState.tokenDecimals ?? [8])[0];
       final amt = _amountCtrl.text.trim();
       List selected = _selected.map((i) => i[0]).toList();
+      final moduleName = await widget.plugin.service.getRuntimeModuleName(
+          ['electionsPhragmen', 'elections', 'phragmenElection']);
       return TxConfirmParams(
-        module: 'electionsPhragmen',
+        module: moduleName,
         call: 'vote',
         txTitle: govDic['vote.candidate'],
         txDisplay: {
@@ -77,7 +80,8 @@ class _CouncilVote extends State<CouncilVotePage> {
           final dic = I18n.of(context).getDic(i18n_full_dic_chainx, 'common');
           final decimals = (widget.plugin.networkState.tokenDecimals ?? [8])[0];
 
-          final balance = Fmt.balanceInt(widget.plugin.balances.native.freeBalance.toString());
+          final balance = Fmt.balanceInt(
+              widget.plugin.balances.native.freeBalance.toString());
 
           return SafeArea(
             child: Column(
@@ -88,20 +92,27 @@ class _CouncilVote extends State<CouncilVotePage> {
                     child: ListView(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                          padding:
+                              EdgeInsets.only(left: 16, right: 16, bottom: 16),
                           child: TextFormField(
                             decoration: InputDecoration(
                               hintText: dic['amount'],
-                              labelText: '${dic['amount']} (${dic['balance']}: ${Fmt.token(balance, decimals)})',
+                              labelText:
+                                  '${dic['amount']} (${dic['balance']}: ${Fmt.token(balance, decimals)})',
                             ),
-                            inputFormatters: [UI.decimalInputFormatter(decimals)],
+                            inputFormatters: [
+                              UI.decimalInputFormatter(decimals)
+                            ],
                             controller: _amountCtrl,
-                            keyboardType: TextInputType.numberWithOptions(decimal: true),
+                            keyboardType:
+                                TextInputType.numberWithOptions(decimal: true),
                             validator: (v) {
                               if (v.isEmpty) {
                                 return dic['amount.error'];
                               }
-                              if (double.parse(v.trim()) >= balance / BigInt.from(pow(10, decimals)) - 0.001) {
+                              if (double.parse(v.trim()) >=
+                                  balance / BigInt.from(pow(10, decimals)) -
+                                      0.001) {
                                 return dic['amount.low'];
                               }
                               return null;
@@ -117,7 +128,8 @@ class _CouncilVote extends State<CouncilVotePage> {
                         ),
                         Column(
                           children: _selected.map((i) {
-                            final accInfo = widget.plugin.store.accounts.addressIndexMap[i[0]];
+                            final accInfo = widget
+                                .plugin.store.accounts.addressIndexMap[i[0]];
                             return Container(
                               margin: EdgeInsets.fromLTRB(16, 0, 16, 8),
                               child: Row(
@@ -127,19 +139,22 @@ class _CouncilVote extends State<CouncilVotePage> {
                                     margin: EdgeInsets.only(right: 8),
                                     child: AddressIcon(
                                       i[0],
-                                      svg: widget.plugin.store.accounts.addressIconsMap[i[0]],
+                                      svg: widget.plugin.store.accounts
+                                          .addressIconsMap[i[0]],
                                       size: 32,
                                       tapToCopy: false,
                                     ),
                                   ),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         UI.accountDisplayName(i[0], accInfo),
                                         Text(
                                           Fmt.address(i[0]),
-                                          style: TextStyle(color: Colors.black54),
+                                          style:
+                                              TextStyle(color: Colors.black54),
                                         ),
                                       ],
                                     ),
@@ -157,7 +172,8 @@ class _CouncilVote extends State<CouncilVotePage> {
                   padding: EdgeInsets.all(16),
                   child: TxButton(
                     getTxParams: _getTxParams,
-                    text: I18n.of(context).getDic(i18n_full_dic_ui, 'common')['tx.submit'],
+                    text: I18n.of(context)
+                        .getDic(i18n_full_dic_ui, 'common')['tx.submit'],
                     onFinish: (res) {
                       if (res != null) {
                         Navigator.of(context).pop(res);
