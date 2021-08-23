@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/council/councilPage.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/democracy/democracyPage.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/treasury/treasuryPage.dart';
@@ -7,6 +8,7 @@ import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/plugin/index.dart';
 import 'package:polkawallet_sdk/utils/i18n.dart';
 import 'package:polkawallet_ui/components/entryPageCard.dart';
+import 'package:polkawallet_ui/pages/dAppWrapperPage.dart';
 
 class Gov extends StatelessWidget {
   Gov(this.plugin);
@@ -29,7 +31,8 @@ class Gov extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    I18n.of(context).getDic(i18n_full_dic_chainx, 'common')['governance'],
+                    I18n.of(context)
+                        .getDic(i18n_full_dic_chainx, 'common')['governance'],
                     style: TextStyle(
                       fontSize: 20,
                       color: Theme.of(context).cardColor,
@@ -42,7 +45,8 @@ class Gov extends StatelessWidget {
             Expanded(
               child: plugin.sdk.api.connectedNode == null
                   ? Container(
-                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.width / 2),
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.width / 2),
                       child: Column(
                         children: [
                           CupertinoActivityIndicator(),
@@ -66,7 +70,8 @@ class Gov extends StatelessWidget {
                               ),
                               color: Theme.of(context).primaryColor,
                             ),
-                            onTap: () => Navigator.of(context).pushNamed(DemocracyPage.route),
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(DemocracyPage.route),
                           ),
                         ),
                         Padding(
@@ -82,7 +87,8 @@ class Gov extends StatelessWidget {
                               ),
                               color: Theme.of(context).primaryColor,
                             ),
-                            onTap: () => Navigator.of(context).pushNamed(CouncilPage.route),
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(CouncilPage.route),
                           ),
                         ),
                         Padding(
@@ -98,7 +104,28 @@ class Gov extends StatelessWidget {
                               ),
                               color: Theme.of(context).primaryColor,
                             ),
-                            onTap: () => Navigator.of(context).pushNamed(TreasuryPage.route),
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(TreasuryPage.route),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 16),
+                          child: GestureDetector(
+                            child: EntryPageCard(
+                              'Polkassembly',
+                              dic['polkassembly'],
+                              Image.asset(
+                                'packages/polkawallet_plugin_chainx/assets/images/public/polkassembly.png',
+                                width: 48,
+                              ),
+                              color: Colors.transparent,
+                            ),
+                            onTap: () => Navigator.of(context).pushNamed(
+                              DAppWrapperPage.route,
+                              arguments:
+                                  'https://${plugin.basic.name}.polkassembly.io/',
+                              // "https://polkadot.js.org/apps/",
+                            ),
                           ),
                         ),
                       ],
