@@ -13,6 +13,7 @@ import 'package:polkawallet_ui/components/addressIcon.dart';
 import 'package:polkawallet_ui/components/txButton.dart';
 import 'package:polkawallet_ui/utils/format.dart';
 import 'package:polkawallet_ui/utils/i18n.dart';
+// import 'package:polkawallet_ui/utils/index.dart';
 
 class CouncilVotePage extends StatefulWidget {
   CouncilVotePage(this.plugin);

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/storage/keyring.dart';
@@ -9,7 +10,7 @@ import 'package:polkawallet_ui/components/addressFormItem.dart';
 import 'package:polkawallet_ui/components/txButton.dart';
 import 'package:polkawallet_ui/pages/accountListPage.dart';
 import 'package:polkawallet_ui/utils/format.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_ui/utils/index.dart';
 
 class SubmitTipPage extends StatefulWidget {
   SubmitTipPage(this.plugin, this.keyring);
@@ -34,12 +35,12 @@ class _SubmitTipPageState extends State<SubmitTipPage> {
   Future<TxConfirmParams> _getTxParams() async {
     if (_formKey.currentState.validate()) {
       final dic = I18n.of(context).getDic(i18n_full_dic_chainx, 'gov');
-      final decimals = (widget.plugin.networkState.tokenDecimals ?? [8])[0];
+      final int decimals = (widget.plugin.networkState.tokenDecimals ?? [8])[0];
       final bool isCouncil = ModalRoute.of(context).settings.arguments;
       final String amt = _amountCtrl.text.trim();
       final String address = _beneficiary.address;
       return TxConfirmParams(
-        module: 'treasury',
+        module: 'tips',
         call: isCouncil ? 'tipNew' : 'reportAwesome',
         txTitle: isCouncil ? dic['treasury.tipNew'] : dic['treasury.report'],
         txDisplay: isCouncil
@@ -117,7 +118,8 @@ class _SubmitTipPageState extends State<SubmitTipPage> {
                           onTap: () async {
                             final acc = await Navigator.of(context).pushNamed(
                               AccountListPage.route,
-                              arguments: AccountListPageParams(list: widget.keyring.allAccounts),
+                              arguments: AccountListPageParams(
+                                  list: widget.keyring.allAccounts),
                             );
                             if (acc != null) {
                               setState(() {
@@ -139,7 +141,8 @@ class _SubmitTipPageState extends State<SubmitTipPage> {
                                 maxLines: 3,
                                 validator: (v) {
                                   final String reason = v.trim();
-                                  if (reason.length < MIN_REASON_LEN || reason.length > MAX_REASON_LEN) {
+                                  if (reason.length < MIN_REASON_LEN ||
+                                      reason.length > MAX_REASON_LEN) {
                                     return dicCommon['input.invalid'];
                                   }
                                   return null;
@@ -149,11 +152,16 @@ class _SubmitTipPageState extends State<SubmitTipPage> {
                                   ? TextFormField(
                                       decoration: InputDecoration(
                                         hintText: dicCommon['amount'],
-                                        labelText: '${dicCommon['amount']} ($symbol)',
+                                        labelText:
+                                            '${dicCommon['amount']} ($symbol)',
                                       ),
-                                      inputFormatters: [UI.decimalInputFormatter(decimals)],
+                                      inputFormatters: [
+                                        UI.decimalInputFormatter(decimals)
+                                      ],
                                       controller: _amountCtrl,
-                                      keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                      keyboardType:
+                                          TextInputType.numberWithOptions(
+                                              decimal: true),
                                       validator: (v) {
                                         if (v.isEmpty) {
                                           return dicCommon['amount.error'];
@@ -171,7 +179,7 @@ class _SubmitTipPageState extends State<SubmitTipPage> {
             Padding(
               padding: EdgeInsets.all(16),
               child: TxButton(
-                text: dic['treasury.submit'],
+                text: dic['treasury.report'],
                 getTxParams: _getTxParams,
                 onFinish: (res) {
                   if (res != null) {

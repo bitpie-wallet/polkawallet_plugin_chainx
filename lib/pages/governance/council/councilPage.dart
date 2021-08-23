@@ -9,7 +9,7 @@ import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/storage/keyring.dart';
 import 'package:polkawallet_sdk/utils/i18n.dart';
 import 'package:polkawallet_ui/ui.dart';
-import 'package:polkawallet_ui/components/topTaps.dart';
+// import 'package:polkawallet_ui/components/topTaps.dart';
 
 class CouncilPage extends StatefulWidget {
   CouncilPage(this.plugin, this.keyring);

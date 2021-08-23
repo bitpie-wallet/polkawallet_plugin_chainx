@@ -8,29 +8,46 @@ import 'package:polkawallet_plugin_chainx/pages/governance/govExternalLinks.dart
 import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/api/types/gov/genExternalLinksParams.dart';
+import 'package:polkawallet_sdk/storage/keyring.dart';
 import 'package:polkawallet_sdk/utils/i18n.dart';
 import 'package:polkawallet_ui/components/listTail.dart';
+import 'package:polkawallet_ui/components/outlinedButtonSmall.dart';
+import 'package:polkawallet_ui/components/roundedCard.dart';
 import 'package:polkawallet_ui/components/txButton.dart';
 import 'package:polkawallet_ui/pages/txConfirmPage.dart';
 
 class Democracy extends StatefulWidget {
-  Democracy(this.plugin);
+  Democracy(this.plugin, this.keyring);
 
   final PluginChainX plugin;
+  final Keyring keyring;
   @override
   _DemocracyState createState() => _DemocracyState();
 }
 
 class _DemocracyState extends State<Democracy> {
-  final GlobalKey<RefreshIndicatorState> _refreshKey = new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshKey =
+      new GlobalKey<RefreshIndicatorState>();
 
   final Map<BigInt, List> _links = {};
+
+  List _unlocks = [];
+  Future<void> _queryDemocracyUnlocks() async {
+    final List unlocks = await widget.plugin.sdk.api.gov
+        .getDemocracyUnlocks(widget.keyring.current.address);
+    if (mounted && unlocks != null) {
+      setState(() {
+        _unlocks = unlocks;
+      });
+    }
+  }
 
   Future<List> _getExternalLinks(BigInt id) async {
     if (_links[id] != null) return _links[id];
 
     final List res = await widget.plugin.sdk.api.gov.getExternalLinks(
-      GenExternalLinksParams.fromJson({'data': id.toString(), 'type': 'referendum'}),
+      GenExternalLinksParams.fromJson(
+          {'data': id.toString(), 'type': 'referendum'}),
     );
     if (res != null) {
       setState(() {
@@ -46,6 +63,8 @@ class _DemocracyState extends State<Democracy> {
     }
     widget.plugin.service.gov.getReferendumVoteConvictions();
     await widget.plugin.service.gov.queryReferendums();
+
+    _queryDemocracyUnlocks();
   }
 
   Future<void> _submitCancelVote(int id) async {
@@ -57,8 +76,32 @@ class _DemocracyState extends State<Democracy> {
       txDisplay: {"id": id},
       params: [id],
     );
-    final res = await Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: params);
-    if (res ?? false) {
+    final res = await Navigator.of(context)
+        .pushNamed(TxConfirmPage.route, arguments: params);
+    if (res != null) {
+      _refreshKey.currentState.show();
+    }
+  }
+
+  void _onUnlock() async {
+    final dic = I18n.of(context).getDic(i18n_full_dic_chainx, 'gov');
+    final txs = _unlocks
+        .map(
+            (e) => 'api.tx.democracy.removeVote(${BigInt.parse(e.toString())})')
+        .toList();
+    txs.add('api.tx.democracy.unlock("${widget.keyring.current.address}")');
+    final res = await Navigator.of(context).pushNamed(TxConfirmPage.route,
+        arguments: TxConfirmParams(
+          txTitle: dic['democracy.unlock'],
+          module: 'utility',
+          call: 'batch',
+          txDisplay: {
+            "actions": ['democracy.removeVote', 'democracy.unlock'],
+          },
+          params: [],
+          rawParams: '[[${txs.join(',')}]]',
+        ));
+    if (res != null) {
       _refreshKey.currentState.show();
     }
   }
@@ -84,48 +127,77 @@ class _DemocracyState extends State<Democracy> {
 
   @override
   Widget build(BuildContext context) {
+    final dic = I18n.of(context).getDic(i18n_full_dic_chainx, 'gov');
     return Observer(
       builder: (_) {
-        final decimals = (widget.plugin.networkState.tokenDecimals ?? [8])[0];
-        final symbol = (widget.plugin.networkState.tokenSymbol ?? ['PCX'])[0];
+        final decimals = widget.plugin.networkState.tokenDecimals[0];
+        final symbol = widget.plugin.networkState.tokenSymbol[0];
         final list = widget.plugin.store.gov.referendums;
         final bestNumber = widget.plugin.store.gov.bestNumber;
+
+        final count = list?.length ?? 0;
         return RefreshIndicator(
           key: _refreshKey,
           onRefresh: _fetchReferendums,
-          child: list == null || list.length == 0
-              ? Center(child: ListTail(isEmpty: true, isLoading: false))
-              : ListView.builder(
-                  itemCount: list.length + 1,
-                  itemBuilder: (BuildContext context, int i) {
-                    return i == list.length
-                        ? Center(
-                            child: ListTail(
-                            isEmpty: false,
-                            isLoading: false,
-                          ))
-                        : ReferendumPanel(
-                            data: list[i],
-                            bestNumber: bestNumber,
-                            symbol: symbol,
-                            decimals: decimals,
-                            blockDuration: BigInt.parse(widget.plugin.networkConst['babe']['expectedBlockTime'].toString()).toInt(),
-                            onCancelVote: _submitCancelVote,
-                            links: FutureBuilder(
-                              future: _getExternalLinks(list[i].index),
-                              builder: (_, AsyncSnapshot snapshot) {
-                                if (snapshot.hasData) {
-                                  return GovExternalLinks(snapshot.data);
-                                }
-                                return Container();
-                              },
-                            ),
-                            onRefresh: () {
-                              _refreshKey.currentState.show();
-                            },
-                          );
-                  },
-                ),
+          child: ListView.builder(
+            itemCount: list.length + 2,
+            itemBuilder: (BuildContext context, int i) {
+              if (i == 0) {
+                return _unlocks.length > 0
+                    ? RoundedCard(
+                        margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                        padding: EdgeInsets.all(16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(dic['democracy.expire']),
+                            OutlinedButtonSmall(
+                              active: true,
+                              content: dic['democracy.unlock'],
+                              onPressed: _onUnlock,
+                              margin: EdgeInsets.all(0),
+                            )
+                          ],
+                        ),
+                      )
+                    : Container();
+              }
+              return i == list.length + 1
+                  ? Container(
+                      margin: EdgeInsets.only(
+                          top: count == 0
+                              ? MediaQuery.of(context).size.width / 2
+                              : 0),
+                      child: Center(
+                          child: ListTail(
+                        isEmpty: count == 0,
+                        isLoading: false,
+                      )),
+                    )
+                  : ReferendumPanel(
+                      data: list[i - 1],
+                      bestNumber: bestNumber,
+                      symbol: symbol,
+                      decimals: decimals,
+                      blockDuration: int.parse(widget.plugin
+                              .networkConst['timestamp']['minimumPeriod']) *
+                          2,
+                      onCancelVote: _submitCancelVote,
+                      links: FutureBuilder(
+                        future: _getExternalLinks(list[i - 1].index),
+                        builder: (_, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            return GovExternalLinks(snapshot.data);
+                          }
+                          return Container();
+                        },
+                      ),
+                      onRefresh: () {
+                        _refreshKey.currentState.show();
+                      },
+                    );
+            },
+          ),
         );
       },
     );

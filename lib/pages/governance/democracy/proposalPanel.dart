@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/democracy/proposalDetailPage.dart';
 import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_ui/components/addressIcon.dart';
 import 'package:polkawallet_ui/components/roundedCard.dart';
 import 'package:polkawallet_ui/utils/format.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_ui/utils/index.dart';
 import 'package:polkawallet_sdk/api/types/gov/proposalInfoData.dart';
 import 'package:polkawallet_sdk/api/types/gov/treasuryOverviewData.dart';
 import 'package:polkawallet_sdk/utils/i18n.dart';
@@ -25,8 +26,10 @@ class ProposalPanel extends StatelessWidget {
           final decimals = (plugin.networkState.tokenDecimals ?? [8])[0];
           final symbol = (plugin.networkState.tokenSymbol ?? ['PCX'])[0];
           final CouncilProposalData proposalMeta = proposal.image?.proposal;
-          final Map accInfo = plugin.store.accounts.addressIndexMap[proposal.proposer];
-          final proposerIcon = plugin.store.accounts.addressIconsMap[proposal.proposer];
+          final Map accInfo =
+              plugin.store.accounts.addressIndexMap[proposal.proposer];
+          final proposerIcon =
+              plugin.store.accounts.addressIconsMap[proposal.proposer];
           final List seconding = proposal.seconds.toList();
           seconding.removeAt(0);
           return GestureDetector(
@@ -39,7 +42,9 @@ class ProposalPanel extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        proposalMeta != null ? '${proposalMeta.section}.${proposalMeta.method}' : 'preimage: ${Fmt.address(proposal.imageHash)}',
+                        proposalMeta != null
+                            ? '${proposalMeta.section}.${proposalMeta.method}'
+                            : 'preimage: ${Fmt.address(proposal.imageHash)}',
                         style: Theme.of(context).textTheme.headline4,
                       ),
                       Text(
@@ -65,7 +70,8 @@ class ProposalPanel extends StatelessWidget {
                                   decimals,
                                 )} $symbol',
                                 style: TextStyle(
-                                  color: Theme.of(context).unselectedWidgetColor,
+                                  color:
+                                      Theme.of(context).unselectedWidgetColor,
                                 ),
                               ),
                             ],
@@ -86,7 +92,8 @@ class ProposalPanel extends StatelessWidget {
                 ],
               ),
             ),
-            onTap: () => Navigator.of(context).pushNamed(ProposalDetailPage.route, arguments: proposal),
+            onTap: () => Navigator.of(context)
+                .pushNamed(ProposalDetailPage.route, arguments: proposal),
           );
         },
       );

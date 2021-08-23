@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:polkawallet_plugin_chainx/common/components/infoItem.dart';
+import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/council/motionDetailPage.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/govExternalLinks.dart';
 import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
@@ -12,13 +13,14 @@ import 'package:polkawallet_sdk/storage/types/keyPairData.dart';
 import 'package:polkawallet_sdk/utils/i18n.dart';
 import 'package:polkawallet_ui/components/addressIcon.dart';
 import 'package:polkawallet_ui/components/borderedTitle.dart';
+import 'package:polkawallet_ui/components/infoItem.dart';
 import 'package:polkawallet_ui/components/roundedButton.dart';
 import 'package:polkawallet_ui/components/roundedCard.dart';
 import 'package:polkawallet_ui/components/txButton.dart';
 import 'package:polkawallet_ui/pages/txConfirmPage.dart';
 import 'package:polkawallet_ui/utils/format.dart';
 import 'package:polkawallet_ui/utils/i18n.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_ui/utils/index.dart';
 
 class SpendProposalPage extends StatefulWidget {
   SpendProposalPage(this.plugin, this.keyring);
@@ -38,7 +40,8 @@ class _SpendProposalPageState extends State<SpendProposalPage> {
     if (_links != null) return _links;
 
     final List res = await widget.plugin.sdk.api.gov.getExternalLinks(
-      GenExternalLinksParams.fromJson({'data': id.toString(), 'type': 'treasury'}),
+      GenExternalLinksParams.fromJson(
+          {'data': id.toString(), 'type': 'treasury'}),
     );
     if (res != null) {
       setState(() {
@@ -50,7 +53,8 @@ class _SpendProposalPageState extends State<SpendProposalPage> {
 
   Future<void> _showActions({bool isVote = false}) async {
     final dic = I18n.of(context).getDic(i18n_full_dic_chainx, 'gov');
-    final SpendProposalData proposal = ModalRoute.of(context).settings.arguments;
+    final SpendProposalData proposal =
+        ModalRoute.of(context).settings.arguments;
     CouncilProposalData proposalData = CouncilProposalData();
     if (isVote) {
       proposalData = proposal.council[0].proposal;
@@ -59,7 +63,9 @@ class _SpendProposalPageState extends State<SpendProposalPage> {
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(
         title: Text(isVote ? dic['treasury.vote'] : dic['treasury.send']),
-        message: isVote ? Text('${proposalData.section}.${proposalData.method}()') : null,
+        message: isVote
+            ? Text('${proposalData.section}.${proposalData.method}()')
+            : null,
         actions: <Widget>[
           CupertinoActionSheetAction(
             child: Text(isVote ? dic['yes.text'] : dic['treasury.approve']),
@@ -85,7 +91,8 @@ class _SpendProposalPageState extends State<SpendProposalPage> {
           )
         ],
         cancelButton: CupertinoActionSheetAction(
-          child: Text(I18n.of(context).getDic(i18n_full_dic_ui, 'common')['cancel']),
+          child: Text(
+              I18n.of(context).getDic(i18n_full_dic_ui, 'common')['cancel']),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -96,8 +103,10 @@ class _SpendProposalPageState extends State<SpendProposalPage> {
 
   Future<void> _onSendToCouncil(bool approve) async {
     final dic = I18n.of(context).getDic(i18n_full_dic_chainx, 'gov');
-    final SpendProposalData proposal = ModalRoute.of(context).settings.arguments;
-    final String txName = 'treasury.${approve ? 'approveProposal' : 'rejectProposal'}';
+    final SpendProposalData proposal =
+        ModalRoute.of(context).settings.arguments;
+    final String txName =
+        'treasury.${approve ? 'approveProposal' : 'rejectProposal'}';
     final args = TxConfirmParams(
       module: 'council',
       call: 'propose',
@@ -106,7 +115,8 @@ class _SpendProposalPageState extends State<SpendProposalPage> {
       params: [proposal.id],
       txName: txName,
     );
-    final res = await Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
+    final res = await Navigator.of(context)
+        .pushNamed(TxConfirmPage.route, arguments: args);
     if (res != null) {
       Navigator.of(context).pop(res);
     }
@@ -114,7 +124,8 @@ class _SpendProposalPageState extends State<SpendProposalPage> {
 
   Future<void> _onVote(bool approve) async {
     final dic = I18n.of(context).getDic(i18n_full_dic_chainx, 'gov');
-    final SpendProposalData proposal = ModalRoute.of(context).settings.arguments;
+    final SpendProposalData proposal =
+        ModalRoute.of(context).settings.arguments;
     final CouncilMotionData councilProposal = proposal.council[0];
     final args = TxConfirmParams(
       module: 'council',
@@ -131,7 +142,8 @@ class _SpendProposalPageState extends State<SpendProposalPage> {
         approve,
       ],
     );
-    final res = await Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
+    final res = await Navigator.of(context)
+        .pushNamed(TxConfirmPage.route, arguments: args);
     if (res != null) {
       Navigator.of(context).pop(res);
     }
@@ -142,13 +154,16 @@ class _SpendProposalPageState extends State<SpendProposalPage> {
     final dic = I18n.of(context).getDic(i18n_full_dic_chainx, 'gov');
     final symbol = (widget.plugin.networkState.tokenSymbol ?? ['PCX'])[0];
     final decimals = (widget.plugin.networkState.tokenDecimals ?? [8])[0];
-    final SpendProposalData proposal = ModalRoute.of(context).settings.arguments;
+    final SpendProposalData proposal =
+        ModalRoute.of(context).settings.arguments;
     final proposer = KeyPairData();
     final beneficiary = KeyPairData();
     proposer.address = proposal.proposal.proposer;
     beneficiary.address = proposal.proposal.beneficiary;
-    final Map accInfoProposer = widget.plugin.store.accounts.addressIndexMap[proposer.address];
-    final Map accInfoBeneficiary = widget.plugin.store.accounts.addressIndexMap[beneficiary.address];
+    final Map accInfoProposer =
+        widget.plugin.store.accounts.addressIndexMap[proposer.address];
+    final Map accInfoBeneficiary =
+        widget.plugin.store.accounts.addressIndexMap[beneficiary.address];
     bool isCouncil = false;
     widget.plugin.store.gov.council.members.forEach((e) {
       if (widget.keyring.current.address == e[0]) {
@@ -210,17 +225,21 @@ class _SpendProposalPageState extends State<SpendProposalPage> {
                   ListTile(
                     leading: AddressIcon(
                       proposer.address,
-                      svg: widget.plugin.store.accounts.addressIconsMap[proposer.address],
+                      svg: widget.plugin.store.accounts
+                          .addressIconsMap[proposer.address],
                     ),
-                    title: UI.accountDisplayName(proposer.address, accInfoProposer),
+                    title: UI.accountDisplayName(
+                        proposer.address, accInfoProposer),
                     subtitle: Text(dic['treasury.proposer']),
                   ),
                   ListTile(
                     leading: AddressIcon(
                       beneficiary.address,
-                      svg: widget.plugin.store.accounts.addressIconsMap[beneficiary.address],
+                      svg: widget.plugin.store.accounts
+                          .addressIconsMap[beneficiary.address],
                     ),
-                    title: UI.accountDisplayName(beneficiary.address, accInfoBeneficiary),
+                    title: UI.accountDisplayName(
+                        beneficiary.address, accInfoBeneficiary),
                     subtitle: Text(dic['treasury.beneficiary']),
                   ),
                   hasProposals
@@ -258,7 +277,8 @@ class _SpendProposalPageState extends State<SpendProposalPage> {
                           child: !hasProposals
                               ? RoundedButton(
                                   text: dic['treasury.send'],
-                                  onPressed: isCouncil ? () => _showActions() : null,
+                                  onPressed:
+                                      isCouncil ? () => _showActions() : null,
                                 )
                               : ProposalVoteButtonsRow(
                                   isCouncil: isCouncil,
