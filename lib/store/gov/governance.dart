@@ -63,7 +63,10 @@ abstract class _GovernanceStore with Store {
 
     if (shouldCache) {
       cacheCouncilTimestamp = DateTime.now().millisecondsSinceEpoch;
-      cache.councilInfo.val = {'data': info, 'cacheTime': cacheCouncilTimestamp};
+      cache.councilInfo.val = {
+        'data': info,
+        'cacheTime': cacheCouncilTimestamp
+      };
     }
   }
 
