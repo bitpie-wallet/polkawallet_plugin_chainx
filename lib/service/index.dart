@@ -32,4 +32,12 @@ class PluginApi {
     );
     return password;
   }
+
+  Future<String> getRuntimeModuleName(List<String> modules) async {
+    final res = await Future.wait(modules.map((e) => plugin.sdk.webView
+        .evalJavascript('(api.tx.$e != undefined ? {} : null)',
+            wrapPromise: false)));
+    print(res);
+    return modules[res.indexWhere((e) => e != null)];
+  }
 }
