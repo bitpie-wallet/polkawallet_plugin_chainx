@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:polkawallet_plugin_chainx/store/staking/types/nominationData.dart';
+import 'package:polkawallet_plugin_chainx/store/staking/types/validatorData.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/utils/i18n.dart';
 import 'package:polkawallet_ui/components/roundedCard.dart';
-import 'package:polkawallet_plugin_chainx/store/staking/types/nominationData.dart';
-import 'package:polkawallet_plugin_chainx/store/staking/types/validatorData.dart';
 import 'package:polkawallet_ui/utils/format.dart';
 
 class TopCard extends StatelessWidget {
-  TopCard(this.validatorsInfo, this.validNominations, this.loading, this.currentAccount) : hasData = validatorsInfo != null && !loading;
+  TopCard(this.validatorsInfo, this.validNominations, this.loading,
+      this.currentAccount)
+      : hasData = validatorsInfo != null && !loading;
 
   final bool loading;
   final List<ValidatorData> validatorsInfo;
@@ -25,12 +27,16 @@ class TopCard extends StatelessWidget {
     List<Widget> res = [];
     BigInt total = BigInt.zero;
 
-    res.add(Padding(padding: EdgeInsets.only(top: 50, left: 20, bottom: 10), child: Text(dicStaking['mystaking.label'], style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))));
+    res.add(Padding(
+        padding: EdgeInsets.only(top: 50, left: 20, bottom: 10),
+        child: Text(dicStaking['mystaking.label'],
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))));
 
     if (currentAccount.isNotEmpty) {
       validNominations.forEach((nmn) {
         BigInt chunks = BigInt.zero;
-        nmn.unbondedChunks?.forEach((chunk) => {chunks += BigInt.from(chunk.value)});
+        nmn.unbondedChunks
+            ?.forEach((chunk) => {chunks += BigInt.from(chunk.value)});
 
         if (nmn.account == currentAccount) {
           total += nmn.nomination;
@@ -68,7 +74,9 @@ class TopCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            Fmt.priceFloorBigInt(Fmt.balanceInt(total.toString()), 8, lengthMax: 4),
+                            Fmt.priceFloorBigInt(
+                                Fmt.balanceInt(total.toString()), 8,
+                                lengthMax: 4),
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           Text(
