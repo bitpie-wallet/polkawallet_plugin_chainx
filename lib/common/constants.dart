@@ -34,5 +34,5 @@ const MaterialColor chainx_yellow = const MaterialColor(
 
 const home_nav_items = ['staking', 'governance'];
 const genesis_hash_chainx =
-    '0x012cfb6997279fed8ff754a5a90cb30627c70fcdd79ee9c480bcef07de754810';
+    '0x6ac13efb5b368b97b4934cef6edfdd99c2af51ba5109bfb8dacc116f9c584c10';
 const String network_name_chainx = 'chainx';
