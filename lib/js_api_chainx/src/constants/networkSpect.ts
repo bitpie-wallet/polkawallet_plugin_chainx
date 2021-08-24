@@ -297,4 +297,4 @@ function getGenesis(name: string): string {
   assert(network && network.genesisHash[0], `Unable to find genesisHash for ${name}`);
   return network.genesisHash[0];
 }
-export const CHAINX_GENESIS = getGenesis("chainx");
+export const CHAINX_GENESIS = '0x012cfb6997279fed8ff754a5a90cb30627c70fcdd79ee9c480bcef07de754810';
