@@ -80,8 +80,16 @@ class _AssetsContentState extends State<AssetsContent> {
                   ),
                   title: Text(symbol),
                   trailing: Text(
-                    Fmt.priceFloorBigInt(balancesInfo != null ? Fmt.balanceTotal(balancesInfo) : BigInt.zero, decimals, lengthFixed: 3),
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+                    Fmt.priceFloorBigInt(
+                        balancesInfo != null
+                            ? Fmt.balanceTotal(balancesInfo)
+                            : BigInt.zero,
+                        decimals,
+                        lengthFixed: 3),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.black54),
                   ),
                   // onTap: () {
                   //   Navigator.pushNamed(context, AssetPage.route);
@@ -119,7 +127,8 @@ class _AssetsContentState extends State<AssetsContent> {
                                         e,
                                         decimals,
                                         detailPageRoute: e.detailPageRoute,
-                                        icon: widget.network.tokenIcons[e.symbol],
+                                        icon:
+                                            widget.network.tokenIcons[e.symbol],
                                       ))
                                   .toList(),
                             )
@@ -158,13 +167,16 @@ class TokenItem extends StatelessWidget {
         ),
         title: Text(item.name),
         trailing: Text(
-          Fmt.priceFloorBigInt(Fmt.balanceInt(item.amount), decimals, lengthFixed: 3),
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+          Fmt.priceFloorBigInt(Fmt.balanceInt(item.amount), decimals,
+              lengthFixed: 3),
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
         ),
         onTap: detailPageRoute == null
             ? null
             : () {
-                Navigator.of(context).pushNamed(detailPageRoute, arguments: item);
+                Navigator.of(context)
+                    .pushNamed(detailPageRoute, arguments: item);
               },
       ),
     );
