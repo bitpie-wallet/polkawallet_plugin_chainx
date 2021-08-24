@@ -3,7 +3,7 @@
 
 import type { ApiPromise } from '@polkadot/api';
 
-import { CHAINX_GENESIS } from '../../constants/networkSpect';
+import { KUSAMA_GENESIS, POLKADOT_GENESIS } from '../../constants/networkSpect';
 
 export interface Inflation {
   inflation: number;
@@ -25,7 +25,8 @@ const DEFAULT_PARAMS: InflationParams = {
 };
 
 const KNOWN_PARAMS: Record<string, InflationParams> = {
-  [CHAINX_GENESIS]: { ...DEFAULT_PARAMS, idealStake: 0.5 }
+  [KUSAMA_GENESIS]: { ...DEFAULT_PARAMS, idealStake: 0.75 },
+  [POLKADOT_GENESIS]: { ...DEFAULT_PARAMS, idealStake: 0.75 }
 };
 
 export function getInflationParams (api: ApiPromise): InflationParams {

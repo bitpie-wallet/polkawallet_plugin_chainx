@@ -7,6 +7,7 @@ import { genLinks } from "./utils/config/config"
 import keyring from "./service/keyring"
 import account from "./service/account"
 import staking from "./service/staking"
+import wc from "./service/walletconnect"
 import gov from "./service/gov"
 
 // send message to JSChannel: PolkaWallet
@@ -40,28 +41,15 @@ async function connect(nodes: string[]) {
   })
 }
 
-const test = async () => {
-  // const props = await api.rpc.system.properties();
-  // send("log", props);
-};
-
-const settings = {
-  test,
+;(<any>window).settings = {
   connect,
-  subscribeMessage,
   getNetworkConst,
   getNetworkProperties,
-  // generate external links to polkascan/subscan/polkassembly...
+  subscribeMessage,
   genLinks,
-};
-
-;(<any>window).settings = settings
+}
 ;(<any>window).keyring = keyring
 ;(<any>window).account = account
 ;(<any>window).staking = staking
 ;(<any>window).gov = gov
-
-// walletConnect supporting is not ready.
-// ;(<any>window).walletConnect = wc
-
-export default settings;
+;(<any>window).walletConnect = wc

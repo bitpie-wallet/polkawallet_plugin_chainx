@@ -1,5 +1,5 @@
 {
-  "name": "@polkawallet/js-api-chainx",
+  "name": "polkawallet-js-chainx",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",

@@ -31,25 +31,17 @@ export async function getNetworkConst(api: ApiPromise) {
  * get network properties, and replace polkadot decimals with const 10.
  */
 export async function getNetworkProperties(api: ApiPromise) {
-  return {
-    ss58Format: 44,
-    tokenDecimals: [8],
-    tokenSymbol: ["PCX"],
-    name: "chainx",
-    genesisHash: SubstrateNetworkKeys.CHAINX,
-  };
-
-  // const chainProperties = await api.rpc.system.properties()
-  // return api.genesisHash.toHuman() == SubstrateNetworkKeys.POLKADOT
-  //   ? api.registry.createType("ChainProperties", {
-  //       ...chainProperties,
-  //       tokenDecimals: [10],
-  //       tokenSymbol: ["DOT"],
-  //     })
-  //   : {
-  //     ...chainProperties,
-  //     tokenDecimals: [8],
-  //     tokenSymbol: ["PCX"],
-  //     genesisHash: api.genesisHash
-  //   }
+  const chainProperties = await api.rpc.system.properties()
+  return api.genesisHash.toHuman() == SubstrateNetworkKeys.POLKADOT
+    ? api.registry.createType("ChainProperties", {
+        ...chainProperties,
+        tokenDecimals: [10],
+        tokenSymbol: ["DOT"],
+      })
+    : {
+      ...chainProperties,
+      tokenDecimals: [8],
+      tokenSymbol: ["PCX"],
+      genesisHash: api.genesisHash
+    }
 }

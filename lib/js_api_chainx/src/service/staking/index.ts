@@ -13,7 +13,7 @@ import { Nomination, UserInterest } from './types';
 
 import { getInflationParams, Inflation } from './inflation';
 
-const divisor = new BN("1".padEnd(8 + 1, "0"));
+const divisor = new BN("1".padEnd(12 + 1, "0"));
 
 function _balanceToNumber(amount: BN) {
   return (
