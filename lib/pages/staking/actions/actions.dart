@@ -172,7 +172,9 @@ class _StakingActions extends State<StakingActions>
           )
         ])));
 
-    String currentAccount = widget.keyring.current.address;
+    String currentAccount = widget.keyring.current.address != null
+        ? widget.keyring.current.address
+        : "";
 
     if (currentAccount.isNotEmpty) {
       validNominations.forEach((nmn) {
