@@ -179,9 +179,10 @@ class _DemocracyState extends State<Democracy> {
                       bestNumber: bestNumber,
                       symbol: symbol,
                       decimals: decimals,
-                      blockDuration: int.parse(widget.plugin
-                              .networkConst['timestamp']['minimumPeriod']) *
-                          2,
+                      blockDuration: BigInt.parse(widget
+                              .plugin.networkConst['babe']['expectedBlockTime']
+                              .toString())
+                          .toInt(),
                       onCancelVote: _submitCancelVote,
                       links: FutureBuilder(
                         future: _getExternalLinks(list[i - 1].index),

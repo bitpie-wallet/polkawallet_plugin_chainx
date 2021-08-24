@@ -228,8 +228,7 @@ class _TipDetailPageState extends State<TipDetailPage> {
     int blockTime = 6000;
     if (widget.plugin.networkConst['treasury'] != null) {
       blockTime =
-          int.parse(widget.plugin.networkConst['timestamp']['minimumPeriod']) *
-              2;
+          int.parse(widget.plugin.networkConst['babe']['expectedBlockTime']);
     }
 
     final List<BigInt> values =

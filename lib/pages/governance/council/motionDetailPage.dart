@@ -104,8 +104,7 @@ class _MotionDetailPageState extends State<MotionDetailPage> {
         int blockTime = 6000;
         if (widget.plugin.networkConst['treasury'] != null) {
           blockTime = int.parse(
-                  widget.plugin.networkConst['timestamp']['minimumPeriod']) *
-              2;
+              widget.plugin.networkConst['babe']['expectedBlockTime']);
         }
         List<List<String>> params = [];
         motion.proposal.meta.args.asMap().forEach((k, v) {
