@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
 // import 'package:polkawallet_plugin_chainx/common/components/infoItem.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/common/constants.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/treasury/spendProposalPage.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/treasury/submitProposalPage.dart';
@@ -19,7 +19,7 @@ import 'package:polkawallet_ui/components/listTail.dart';
 import 'package:polkawallet_ui/components/roundedButton.dart';
 import 'package:polkawallet_ui/components/roundedCard.dart';
 import 'package:polkawallet_ui/utils/format.dart';
-// import 'package:polkawallet_ui/utils/index.dart';
+import 'package:polkawallet_ui/utils/index.dart';
 
 class SpendProposals extends StatefulWidget {
   SpendProposals(this.plugin, this.keyring);

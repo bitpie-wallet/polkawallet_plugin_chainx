@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/pages/staking/actions/addressDropdownItem.dart';
 import 'package:polkawallet_plugin_chainx/pages/staking/actions/addressFormItemForValidator.dart';
 import 'package:polkawallet_plugin_chainx/pages/staking/actions/customDropdown.dart';
@@ -13,7 +13,7 @@ import 'package:polkawallet_ui/components/addressFormItem.dart';
 import 'package:polkawallet_ui/components/roundedButton.dart';
 import 'package:polkawallet_ui/components/txButton.dart';
 import 'package:polkawallet_ui/utils/format.dart';
-// import 'package:polkawallet_ui/utils/index.dart';
+import 'package:polkawallet_ui/utils/index.dart';
 
 class RebondPage extends StatefulWidget {
   RebondPage(

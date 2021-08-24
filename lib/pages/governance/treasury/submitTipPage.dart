@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/storage/keyring.dart';
 import 'package:polkawallet_sdk/storage/types/keyPairData.dart';
@@ -10,7 +10,7 @@ import 'package:polkawallet_ui/components/addressFormItem.dart';
 import 'package:polkawallet_ui/components/txButton.dart';
 import 'package:polkawallet_ui/pages/accountListPage.dart';
 import 'package:polkawallet_ui/utils/format.dart';
-// import 'package:polkawallet_ui/utils/index.dart';
+import 'package:polkawallet_ui/utils/index.dart';
 
 class SubmitTipPage extends StatefulWidget {
   SubmitTipPage(this.plugin, this.keyring);

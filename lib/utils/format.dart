@@ -1,6 +1,6 @@
 import 'package:polkawallet_plugin_chainx/store/staking/types/validatorData.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
-// import 'package:polkawallet_ui/utils/index.dart';
+// import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+import 'package:polkawallet_ui/utils/index.dart';
 
 class PluginFmt {
   static Map formatRewardsChartData(Map chartData) {

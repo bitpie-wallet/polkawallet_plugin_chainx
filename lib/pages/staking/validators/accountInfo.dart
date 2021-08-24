@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_ui/components/addressIcon.dart';
 import 'package:polkawallet_ui/components/jumpToBrowserLink.dart';
 import 'package:polkawallet_ui/utils/format.dart';
-// import 'package:polkawallet_ui/utils/index.dart';
+import 'package:polkawallet_ui/utils/index.dart';
 
 class AccountInfo extends StatelessWidget {
   AccountInfo({this.accInfo, this.address, this.icon, this.network});

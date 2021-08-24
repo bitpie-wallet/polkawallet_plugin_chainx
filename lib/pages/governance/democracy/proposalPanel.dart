@@ -2,16 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/democracy/proposalDetailPage.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
-import 'package:polkawallet_ui/components/addressIcon.dart';
-import 'package:polkawallet_ui/components/roundedCard.dart';
-import 'package:polkawallet_ui/utils/format.dart';
-// import 'package:polkawallet_ui/utils/index.dart';
 import 'package:polkawallet_sdk/api/types/gov/proposalInfoData.dart';
 import 'package:polkawallet_sdk/api/types/gov/treasuryOverviewData.dart';
 import 'package:polkawallet_sdk/utils/i18n.dart';
+import 'package:polkawallet_ui/components/addressIcon.dart';
+import 'package:polkawallet_ui/components/roundedCard.dart';
+import 'package:polkawallet_ui/utils/format.dart';
+import 'package:polkawallet_ui/utils/index.dart';
 
 class ProposalPanel extends StatelessWidget {
   ProposalPanel(this.plugin, this.proposal);

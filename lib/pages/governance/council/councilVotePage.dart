@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/council/candidateListPage.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/utils/i18n.dart';
@@ -13,7 +13,7 @@ import 'package:polkawallet_ui/components/addressIcon.dart';
 import 'package:polkawallet_ui/components/txButton.dart';
 import 'package:polkawallet_ui/utils/format.dart';
 import 'package:polkawallet_ui/utils/i18n.dart';
-// import 'package:polkawallet_ui/utils/index.dart';
+import 'package:polkawallet_ui/utils/index.dart';
 
 class CouncilVotePage extends StatefulWidget {
   CouncilVotePage(this.plugin);
