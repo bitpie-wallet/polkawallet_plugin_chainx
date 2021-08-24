@@ -1,5 +1,6 @@
 import 'package:polkawallet_plugin_chainx/store/staking/types/validatorData.dart';
 import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_ui/utils/index.dart';
 
 class PluginFmt {
   static Map formatRewardsChartData(Map chartData) {
@@ -42,29 +43,41 @@ class PluginFmt {
     };
   }
 
-  static int sortValidatorList(Map addressIndexMap, ValidatorData a, ValidatorData b, int sortType) {
+  static int sortValidatorList(
+      Map addressIndexMap, ValidatorData a, ValidatorData b, int sortType) {
     switch (sortType) {
       case 0:
-        return BigInt.parse(a.totalNomination) < BigInt.parse(b.totalNomination) ? 1 : -1;
+        return BigInt.parse(a.totalNomination) < BigInt.parse(b.totalNomination)
+            ? 1
+            : -1;
       case 1:
         return BigInt.parse(a.selfBonded) < BigInt.parse(b.selfBonded) ? 1 : -1;
       case 2:
-        return BigInt.parse(a.rewardPotBalance) < BigInt.parse(b.rewardPotBalance) ? 1 : -1;
+        return BigInt.parse(a.rewardPotBalance) <
+                BigInt.parse(b.rewardPotBalance)
+            ? 1
+            : -1;
       default:
         return -1;
     }
   }
 
-  static List<ValidatorData> filterValidatorList(List<ValidatorData> ls, String filter, Map accIndexMap) {
+  static List<ValidatorData> filterValidatorList(
+      List<ValidatorData> ls, String filter, Map accIndexMap) {
     ls.retainWhere((i) {
       final Map accInfo = accIndexMap[i.accountId];
       final value = filter.trim().toLowerCase();
-      return UI.accountDisplayNameString(i.accountId, accInfo).toLowerCase().contains(value) || i.accountId.toLowerCase().contains(value);
+      return UI
+              .accountDisplayNameString(i.accountId, accInfo)
+              .toLowerCase()
+              .contains(value) ||
+          i.accountId.toLowerCase().contains(value);
     });
     return ls;
   }
 
-  static List<List> filterCandidateList(List<List> ls, String filter, Map accIndexMap) {
+  static List<List> filterCandidateList(
+      List<List> ls, String filter, Map accIndexMap) {
     ls.retainWhere((i) {
       String value = filter.trim().toLowerCase();
       String accName = '';
@@ -72,7 +85,8 @@ class PluginFmt {
       if (accInfo != null) {
         accName = accInfo['identity']['display'] ?? '';
       }
-      return i[0].toLowerCase().contains(value) || accName.toLowerCase().contains(value);
+      return i[0].toLowerCase().contains(value) ||
+          accName.toLowerCase().contains(value);
     });
     return ls;
   }

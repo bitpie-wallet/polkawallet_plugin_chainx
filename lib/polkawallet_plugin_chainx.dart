@@ -44,19 +44,19 @@ import 'package:polkawallet_ui/pages/txConfirmPage.dart';
 import 'package:polkawallet_ui/pages/walletExtensionSignPage.dart';
 
 class PluginChainX extends PolkawalletPlugin {
-  PluginChainX({name = 'chainx'})
+  PluginChainX()
       : basic = PluginBasicData(
-          name: name,
-          genesisHash: chainx_genesis_hash,
+          name: 'chainx',
+          genesisHash: genesis_hash_chainx,
           ss58: 44,
           primaryColor: chainx_yellow,
           gradientColor: Colors.yellow,
           backgroundImage: AssetImage(
               'packages/polkawallet_plugin_chainx/assets/images/public/bg.png'),
           icon: Image.asset(
-              'packages/polkawallet_plugin_chainx/assets/images/public/$name.png'),
+              'packages/polkawallet_plugin_chainx/assets/images/public/chainx.png'),
           iconDisabled: Image.asset(
-              'packages/polkawallet_plugin_chainx/assets/images/public/${name}_gray.png'),
+              'packages/polkawallet_plugin_chainx/assets/images/public/chainx_gray.png'),
           jsCodeVersion: 11301,
           isTestNet: false,
         ),
@@ -150,9 +150,16 @@ class PluginChainX extends PolkawalletPlugin {
     await GetStorage.init(plugin_chainx_storage_key);
 
     _store = PluginStore(_cache);
-    _store.staking.loadCache(keyring.current.pubKey);
-    _store.gov.clearState();
-    _store.gov.loadCache();
+
+    try {
+      _store.staking.loadCache(keyring.current.pubKey);
+      _store.gov.clearState();
+      _store.gov.loadCache();
+      print('chainx plugin cache data loaded');
+    } catch (err) {
+      print(err);
+      print('load chainx cache data failed');
+    }
 
     _service = PluginApi(this, keyring);
   }

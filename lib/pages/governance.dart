@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/council/councilPage.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/democracy/democracyPage.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/treasury/treasuryPage.dart';
