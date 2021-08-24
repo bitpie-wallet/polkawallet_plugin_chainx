@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
 import 'package:polkawallet_plugin_chainx/common/components/topTabs.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/democracy/democracy.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/democracy/proposals.dart';
-import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/storage/keyring.dart';
 import 'package:polkawallet_sdk/utils/i18n.dart';

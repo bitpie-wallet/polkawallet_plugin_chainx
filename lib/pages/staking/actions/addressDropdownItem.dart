@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_ui/components/addressIcon.dart';
 import 'package:polkawallet_ui/utils/format.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_ui/utils/index.dart';
 
 class AddressDropdownItem extends StatelessWidget {
-  AddressDropdownItem(this.address, this.icon, this.accInfo, {this.label, this.svg, this.onTap});
+  AddressDropdownItem(this.address, this.icon, this.accInfo,
+      {this.label, this.svg, this.onTap});
   final String label;
   final String svg;
   final String address;

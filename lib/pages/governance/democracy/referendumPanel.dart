@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:polkawallet_plugin_chainx/common/components/infoItem.dart';
+// import 'package:polkawallet_plugin_chainx/common/components/infoItem.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/council/motionDetailPage.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/democracy/referendumVotePage.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';

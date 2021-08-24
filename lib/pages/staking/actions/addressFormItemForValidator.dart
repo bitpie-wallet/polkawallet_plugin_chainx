@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_ui/components/addressIcon.dart';
 import 'package:polkawallet_ui/utils/format.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_ui/utils/index.dart';
 
 class AddressFormItemForValidator extends StatelessWidget {
-  AddressFormItemForValidator(this.address, this.icon, this.accInfo, {this.label, this.svg, this.onTap});
+  AddressFormItemForValidator(this.address, this.icon, this.accInfo,
+      {this.label, this.svg, this.onTap});
   final String label;
   final String svg;
   final String address;
@@ -34,7 +36,8 @@ class AddressFormItemForValidator extends StatelessWidget {
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(8)),
-            border: Border.all(color: Theme.of(context).disabledColor, width: 0.5),
+            border:
+                Border.all(color: Theme.of(context).disabledColor, width: 0.5),
           ),
           child: Row(
             children: <Widget>[

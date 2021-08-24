@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/pages/staking/actions/stakePage.dart';
 import 'package:polkawallet_plugin_chainx/pages/staking/validators/validatorDetailPage.dart';
 import 'package:polkawallet_plugin_chainx/store/staking/types/validatorData.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/utils/i18n.dart';
 import 'package:polkawallet_ui/components/addressIcon.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_ui/utils/index.dart';
 
 class Validator extends StatelessWidget {
   Validator(
@@ -85,7 +86,8 @@ class Validator extends StatelessWidget {
                     child: Text(dic['mystaking.action.vote.label']),
                   ),
                   onTap: () {
-                    Navigator.of(context).pushNamed(StakePage.route, arguments: validator);
+                    Navigator.of(context)
+                        .pushNamed(StakePage.route, arguments: validator);
                   },
                 ),
               ],
@@ -95,7 +97,8 @@ class Validator extends StatelessWidget {
       ),
       onTap: () {
         // webApi.staking.queryValidatorRewards(validator.accountId);
-        Navigator.of(context).pushNamed(ValidatorDetailPage.route, arguments: validator);
+        Navigator.of(context)
+            .pushNamed(ValidatorDetailPage.route, arguments: validator);
       },
     );
   }

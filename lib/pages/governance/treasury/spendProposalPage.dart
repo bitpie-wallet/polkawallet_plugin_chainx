@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:polkawallet_plugin_chainx/common/components/infoItem.dart';
+import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
+// import 'package:polkawallet_plugin_chainx/common/components/infoItem.dart';
 import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/council/motionDetailPage.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/govExternalLinks.dart';
-import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/api/types/gov/genExternalLinksParams.dart';
 import 'package:polkawallet_sdk/api/types/gov/treasuryOverviewData.dart';

@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
+import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/pages/staking/actions/addressDropdownItem.dart';
 import 'package:polkawallet_plugin_chainx/pages/staking/actions/addressFormItemForValidator.dart';
 import 'package:polkawallet_plugin_chainx/pages/staking/actions/customDropdown.dart';
-import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
 import 'package:polkawallet_plugin_chainx/store/staking/types/validatorData.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/storage/keyring.dart';
@@ -12,10 +13,12 @@ import 'package:polkawallet_ui/components/addressFormItem.dart';
 import 'package:polkawallet_ui/components/roundedButton.dart';
 import 'package:polkawallet_ui/components/txButton.dart';
 import 'package:polkawallet_ui/utils/format.dart';
-import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
+// import 'package:polkawallet_ui/utils/index.dart';
 
 class RebondPage extends StatefulWidget {
-  RebondPage(this.plugin, this.keyring, this.validatorAccountId, this.switchable, {this.onNext});
+  RebondPage(
+      this.plugin, this.keyring, this.validatorAccountId, this.switchable,
+      {this.onNext});
   final PluginChainX plugin;
   final Keyring keyring;
   final String validatorAccountId;
@@ -32,11 +35,14 @@ class _RebondPageState extends State<RebondPage> {
   ValidatorData validatorTo;
 
   List<DropdownMenuItem<ValidatorData>> validatorDropdownList;
-  List<DropdownMenuItem<ValidatorData>> _buildFavouriteFoodModelDropdown(List validatorList) {
+  List<DropdownMenuItem<ValidatorData>> _buildFavouriteFoodModelDropdown(
+      List validatorList) {
     List<DropdownMenuItem<ValidatorData>> items = List();
     for (ValidatorData validator in validatorList) {
-      final accIcon = widget.plugin.store.accounts.addressIconsMap[validator.accountId];
-      final accInfo = widget.plugin.store.accounts.addressIndexMap[validator.accountId];
+      final accIcon =
+          widget.plugin.store.accounts.addressIconsMap[validator.accountId];
+      final accInfo =
+          widget.plugin.store.accounts.addressIndexMap[validator.accountId];
       items.add(DropdownMenuItem(
         value: validator,
         child: AddressDropdownItem(
@@ -53,7 +59,8 @@ class _RebondPageState extends State<RebondPage> {
 
   @override
   void initState() {
-    validatorDropdownList = _buildFavouriteFoodModelDropdown(widget.plugin.store.staking.validatorsInfo);
+    validatorDropdownList = _buildFavouriteFoodModelDropdown(
+        widget.plugin.store.staking.validatorsInfo);
     validatorTo = widget.plugin.store.staking.validatorsInfo[0];
     super.initState();
   }
@@ -65,8 +72,10 @@ class _RebondPageState extends State<RebondPage> {
     final decimals = (widget.plugin.networkState.tokenDecimals ?? [8])[0];
     final symbol = (widget.plugin.networkState.tokenSymbol ?? ['PCX'])[0];
 
-    final accIcon = widget.plugin.store.accounts.addressIconsMap[widget.validatorAccountId];
-    final accInfo = widget.plugin.store.accounts.addressIndexMap[widget.validatorAccountId];
+    final accIcon =
+        widget.plugin.store.accounts.addressIconsMap[widget.validatorAccountId];
+    final accInfo =
+        widget.plugin.store.accounts.addressIndexMap[widget.validatorAccountId];
 
     return Column(
       children: <Widget>[
@@ -110,14 +119,16 @@ class _RebondPageState extends State<RebondPage> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       hintText: dic['amount'],
-                      labelText: '${dic['amount']} (${dicStaking['switchable']}: ${Fmt.priceFloor(
+                      labelText:
+                          '${dic['amount']} (${dicStaking['switchable']}: ${Fmt.priceFloor(
                         widget.switchable,
                         lengthMax: 4,
                       )} $symbol)',
                     ),
                     inputFormatters: [UI.decimalInputFormatter(decimals)],
                     controller: _amountCtrl,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     validator: (v) {
                       if (v.isEmpty) {
                         return dic['amount.error'];

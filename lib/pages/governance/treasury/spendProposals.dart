@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:polkawallet_plugin_chainx/common/components/infoItem.dart';
+import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
+// import 'package:polkawallet_plugin_chainx/common/components/infoItem.dart';
 import 'package:polkawallet_plugin_chainx/common/components/UI.dart';
 import 'package:polkawallet_plugin_chainx/common/constants.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/treasury/spendProposalPage.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/treasury/submitProposalPage.dart';
 import 'package:polkawallet_plugin_chainx/pages/governance/treasury/submitTipPage.dart';
-import 'package:polkawallet_plugin_chainx/polkawallet_plugin_chainx.dart';
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/api/types/gov/treasuryOverviewData.dart';
 import 'package:polkawallet_sdk/storage/keyring.dart';

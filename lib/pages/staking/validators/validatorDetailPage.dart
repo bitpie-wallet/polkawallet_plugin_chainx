@@ -8,6 +8,7 @@ import 'package:polkawallet_plugin_chainx/pages/staking/validators/accountInfo.d
 import 'package:polkawallet_plugin_chainx/utils/i18n/index.dart';
 import 'package:polkawallet_sdk/storage/keyring.dart';
 import 'package:polkawallet_sdk/utils/i18n.dart';
+// import 'package:polkawallet_ui/components/infoItem.dart';
 import 'package:polkawallet_ui/components/roundedCard.dart';
 import 'package:polkawallet_ui/utils/format.dart';
 
@@ -21,11 +22,15 @@ class ValidatorDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Observer(
         builder: (_) {
-          final dicStaking = I18n.of(context).getDic(i18n_full_dic_chainx, 'staking');
-          final ValidatorData detail = ModalRoute.of(context).settings.arguments;
+          final dicStaking =
+              I18n.of(context).getDic(i18n_full_dic_chainx, 'staking');
+          final ValidatorData detail =
+              ModalRoute.of(context).settings.arguments;
 
-          final accInfo = plugin.store.accounts.addressIndexMap[detail.accountId];
-          final accIcon = plugin.store.accounts.addressIconsMap[detail.accountId];
+          final accInfo =
+              plugin.store.accounts.addressIndexMap[detail.accountId];
+          final accIcon =
+              plugin.store.accounts.addressIconsMap[detail.accountId];
 
           return Scaffold(
             appBar: AppBar(
@@ -67,7 +72,9 @@ class ValidatorDetailPage extends StatelessWidget {
                           title: dicStaking['overview.pots'],
                           content: detail.rewardPotBalanceFmt,
                         ),
-                        InfoItem(title: dicStaking['overview.potacc'], content: Fmt.address(detail.rewardPotAccount)),
+                        InfoItem(
+                            title: dicStaking['overview.potacc'],
+                            content: Fmt.address(detail.rewardPotAccount)),
                       ],
                     ),
                   ),
