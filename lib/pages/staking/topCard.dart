@@ -32,7 +32,7 @@ class TopCard extends StatelessWidget {
         child: Text(dicStaking['mystaking.label'],
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))));
 
-    if (currentAccount.isNotEmpty) {
+    if (hasData && currentAccount.isNotEmpty) {
       validNominations.forEach((nmn) {
         BigInt chunks = BigInt.zero;
         nmn.unbondedChunks
