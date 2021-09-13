@@ -10,7 +10,7 @@ import staking from "./service/staking"
 //import wc from "./service/walletconnect"
 import gov from "./service/gov"
 
-// send message to JSChannel: PolkaWallet
+// send message to JSChanFnel: PolkaWallet
 function send(path: string, data: any) {
     console.log(JSON.stringify({path, data}))
 }
