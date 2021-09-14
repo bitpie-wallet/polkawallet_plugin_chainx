@@ -22,10 +22,9 @@ async function connect(nodes: string[]) {
     const wsProvider = new WsProvider(nodes)
     try {
       const res = await ApiPromise.create(options({ provider: wsProvider }))
-      ;(<any>window).api = res
-      send("log", res)      
+      ;(<any>window).api = res    
       await res.isReady
-      const url = nodes[(<any>res)._options.provider.__private_106_endpointIndex]
+      const url = nodes[(<any>res)._options.provider.__private_14_endpointIndex]
       send("log", `${url} wss connected success`)
       resolve(url)
     } catch (err) {
