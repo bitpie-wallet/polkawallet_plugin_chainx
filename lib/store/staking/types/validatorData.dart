@@ -2,7 +2,7 @@ class ValidatorData extends _ValidatorData {
   static ValidatorData fromJson(Map<String, dynamic> json) {
     ValidatorData data = ValidatorData();
     data.accountId = json['account'];
-    data.registeredAt = BigInt.parse(json['registeredAt'].toString());
+    data.registeredAt = json['registeredAt'];
     data.isChilled = json['isChilled'];
     data.totalNomination = json['totalNomination'];
     data.totalNominationFmt = json['totalNominationFmt'];
@@ -40,7 +40,7 @@ class ValidatorData extends _ValidatorData {
 
 abstract class _ValidatorData {
   String accountId = '';
-  BigInt registeredAt = 0;
+  int registeredAt = 0;
   bool isChilled = false;
   String totalNomination = '';
   String totalNominationFmt = '';
