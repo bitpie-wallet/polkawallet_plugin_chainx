@@ -492,4 +492,7 @@ export default {
   signTxAsExtension,
   signBytesAsExtension,
   verifySignature,
+  checkMnemonicValid,
+  addressFromMnemonic,
+  addressFromRawSeed
 }
