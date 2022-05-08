@@ -42,6 +42,8 @@ import 'package:polkawallet_sdk/utils/i18n.dart';
 import 'package:polkawallet_ui/pages/dAppWrapperPage.dart';
 import 'package:polkawallet_ui/pages/txConfirmPage.dart';
 import 'package:polkawallet_ui/pages/walletExtensionSignPage.dart';
+import 'package:flutter_boost/flutter_boost.dart';
+import 'package:flutter/cupertino.dart';
 
 class PluginChainX extends PolkawalletPlugin {
   PluginChainX()
@@ -101,36 +103,115 @@ class PluginChainX extends PolkawalletPlugin {
   }
 
   @override
-  Map<String, WidgetBuilder> getRoutes(Keyring keyring) {
+  Map<String, FlutterBoostRouteFactory> getRoutes(Keyring keyring) {
     return {
-      TxConfirmPage.route: (_) =>
-          TxConfirmPage(this, keyring, _service.getPassword),
-
-      // staking pages
-      StakePage.route: (_) => StakePage(this, keyring),
-      ClaimPageWrapper.route: (_) => ClaimPageWrapper(this, keyring),
-      UnboundPageWrapper.route: (_) => UnboundPageWrapper(this, keyring),
-      RebondPageWrapper.route: (_) => RebondPageWrapper(this, keyring),
-      UnfreezePageWrapper.route: (_) => UnfreezePageWrapper(this, keyring),
-      ValidatorDetailPage.route: (_) => ValidatorDetailPage(this, keyring),
-
-      // governance pages
-      DemocracyPage.route: (_) => DemocracyPage(this, keyring),
-      ReferendumVotePage.route: (_) => ReferendumVotePage(this, keyring),
-      CouncilPage.route: (_) => CouncilPage(this, keyring),
-      CouncilVotePage.route: (_) => CouncilVotePage(this),
-      CandidateListPage.route: (_) => CandidateListPage(this, keyring),
-      CandidateDetailPage.route: (_) => CandidateDetailPage(this, keyring),
-      MotionDetailPage.route: (_) => MotionDetailPage(this, keyring),
-      ProposalDetailPage.route: (_) => ProposalDetailPage(this, keyring),
-      TreasuryPage.route: (_) => TreasuryPage(this, keyring),
-      SpendProposalPage.route: (_) => SpendProposalPage(this, keyring),
-      SubmitProposalPage.route: (_) => SubmitProposalPage(this, keyring),
-      SubmitTipPage.route: (_) => SubmitTipPage(this, keyring),
-      TipDetailPage.route: (_) => TipDetailPage(this, keyring),
-      DAppWrapperPage.route: (_) => DAppWrapperPage(this, keyring),
-      WalletExtensionSignPage.route: (_) =>
-          WalletExtensionSignPage(this, keyring, _service.getPassword),
+      TxConfirmPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => TxConfirmPage(this, keyring, _service.getPassword));
+      },
+      StakePage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings, builder: (_) => StakePage(this, keyring));
+      },
+      ClaimPageWrapper.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => ClaimPageWrapper(this, keyring));
+      },
+      UnboundPageWrapper.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => UnboundPageWrapper(this, keyring));
+      },
+      RebondPageWrapper.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => RebondPageWrapper(this, keyring));
+      },
+      UnfreezePageWrapper.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => UnfreezePageWrapper(this, keyring));
+      },
+      ValidatorDetailPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => ValidatorDetailPage(this, keyring));
+      },
+      DemocracyPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings, builder: (_) => DemocracyPage(this, keyring));
+      },
+      ReferendumVotePage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => ReferendumVotePage(this, keyring));
+      },
+      CouncilPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings, builder: (_) => CouncilPage(this, keyring));
+      },
+      CouncilVotePage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings, builder: (_) => CouncilVotePage(this));
+      },
+      CandidateListPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => CandidateListPage(this, keyring));
+      },
+      CandidateDetailPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => CandidateDetailPage(this, keyring));
+      },
+      MotionDetailPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => MotionDetailPage(this, keyring));
+      },
+      ProposalDetailPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => ProposalDetailPage(this, keyring));
+      },
+      SpendProposalPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => SpendProposalPage(this, keyring));
+      },
+      TreasuryPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings, builder: (_) => TreasuryPage(this, keyring));
+      },
+      TreasuryPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings, builder: (_) => TreasuryPage(this, keyring));
+      },
+      SubmitProposalPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) => SubmitProposalPage(this, keyring));
+      },
+      SubmitTipPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings, builder: (_) => SubmitTipPage(this, keyring));
+      },
+      TipDetailPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings, builder: (_) => TipDetailPage(this, keyring));
+      },
+      DAppWrapperPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings, builder: (_) => DAppWrapperPage(this, keyring));
+      },
+      WalletExtensionSignPage.route: (settings, uniqueId) {
+        return CupertinoPageRoute(
+            settings: settings,
+            builder: (_) =>
+                WalletExtensionSignPage(this, keyring, _service.getPassword));
+      }
     };
   }
 
