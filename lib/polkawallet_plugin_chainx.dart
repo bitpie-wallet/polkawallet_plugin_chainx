@@ -185,10 +185,6 @@ class PluginChainX extends PolkawalletPlugin {
         return CupertinoPageRoute(
             settings: settings, builder: (_) => TreasuryPage(this, keyring));
       },
-      TreasuryPage.route: (settings, uniqueId) {
-        return CupertinoPageRoute(
-            settings: settings, builder: (_) => TreasuryPage(this, keyring));
-      },
       SubmitProposalPage.route: (settings, uniqueId) {
         return CupertinoPageRoute(
             settings: settings,
